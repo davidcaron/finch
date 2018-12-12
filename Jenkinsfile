@@ -9,6 +9,14 @@ pipeline {
         )
     }
     stages {
+
+        stage('Cleanup') {
+            steps {
+                sh 'git clean -Xdff'
+                sh 'git reset --hard HEAD'
+            }
+        }
+
         stage('[Docker] Build') {
             steps {
                 sh 'docker build -t finch .'
@@ -25,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('Install Miniconda') {
+        stage('Setup Miniconda') {
             steps {
                  sh '''
                  if ! [[ -d $HOME/miniconda ]] ; then
@@ -55,7 +63,7 @@ pipeline {
             }
         }
 
-        stage('Docker deploy') {
+        stage('[Docker] deploy') {
             steps {
                 echo 'Deploying....'
             }
