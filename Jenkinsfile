@@ -18,13 +18,10 @@ pipeline {
         stage('Docker test') {
             steps {
                 sh '''
-                docker run finch \
-                conda install -y -c conda-forge pytest flake8 && \
-                pytest -v -m 'not slow and not online'
-                '''
                 docker run -v $(pwd)/tests:/code/tests finch /bin/bash -c " \
                 pip install pytest flake8 && \
                 pytest -v -m 'not slow and not online'"
+                '''
             }
             
         }
