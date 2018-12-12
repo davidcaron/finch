@@ -7,14 +7,11 @@ pipeline {
             // only keep the latest builds
             logRotator(numToKeepStr:'10')
         )
-    }
-    stages {
+        checkout([$class: 'GitSCM', branches: [[name: 'jenkins']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], submoduleCfg: [], userRemoteConfigs: [[url: 'http://github.com/davidcaron/finch']]])
 
-        stage('Cleanup') {
-            steps {
-                sh 'git clean -nXdff'
-            }
-        }
+    }
+
+    stages {
 
         stage('[Docker] Build') {
             steps {
