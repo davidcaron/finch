@@ -27,10 +27,13 @@ pipeline {
 
         stage('Install Miniconda') {
             steps {
-                 sh 'wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh'
-                 sh 'chmod +x ./miniconda.sh'
-                 sh 'bash ~/miniconda.sh -b -p $HOME/miniconda'
-                 sh 'export PATH="$HOME/miniconda/bin:$PATH"'
+                 sh '''
+                 if ! [[ -d $HOME/miniconda ]] ; then
+                    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/miniconda.sh
+                    chmod +x $HOME/miniconda.sh
+                    bash $HOME/miniconda.sh -b -p $HOME/miniconda
+                 fi
+                 '''
             }
         }
 
