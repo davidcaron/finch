@@ -7,8 +7,6 @@ pipeline {
             // only keep the latest builds
             logRotator(numToKeepStr:'10')
         )
-        checkout([$class: 'GitSCM', branches: [[name: 'jenkins']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], submoduleCfg: [], userRemoteConfigs: [[url: 'http://github.com/davidcaron/finch']]])
-
     }
 
     stages {
