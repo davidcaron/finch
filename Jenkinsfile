@@ -39,12 +39,14 @@ pipeline {
 
         stage('Install') {
             steps {
+                sh 'export PATH="$HOME/miniconda/bin:$PATH"'
                 sh 'make install'
             }
         }
 
         stage('Test') {
             steps {
+                sh 'export PATH="$HOME/miniconda/bin:$PATH"'
                 sh 'make test'
             }
         }
