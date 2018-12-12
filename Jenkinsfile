@@ -12,8 +12,7 @@ pipeline {
 
         stage('Cleanup') {
             steps {
-                sh 'git clean -Xdff'
-                sh 'git reset --hard HEAD'
+                sh 'git clean -nXdff'
             }
         }
 
