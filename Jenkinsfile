@@ -9,13 +9,13 @@ pipeline {
         )
     }
     stages {
-        stage('Docker build') {
+        stage('[Docker] Build') {
             steps {
                 sh 'docker build -t finch .'
             }
         }
 
-        stage('Docker test') {
+        stage('[Docker] Test') {
             steps {
                 sh '''
                 docker run -v $(pwd)/tests:/code/tests finch /bin/bash -c " \
@@ -23,8 +23,29 @@ pipeline {
                 pytest -v -m 'not slow and not online'"
                 '''
             }
-            
         }
+
+        stage('Install Miniconda') {
+            steps {
+                 sh 'wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh'
+                 sh 'chmod +x ./miniconda.sh'
+                 sh 'bash ~/miniconda.sh -b -p $HOME/miniconda'
+                 sh 'export PATH="$HOME/miniconda/bin:$PATH"'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                sh 'make install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'make test'
+            }
+        }
+
         stage('Docker deploy') {
             steps {
                 echo 'Deploying....'
