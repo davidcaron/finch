@@ -22,7 +22,8 @@ pipeline {
                 sh '''
                 docker run -v $(pwd)/tests:/code/tests finch /bin/bash -c " \
                 pip install pytest flake8 && \
-                pytest -v -m 'not slow and not online'"
+                pytest -v -m 'not slow and not online'" && \
+                rm -rf /code/tests/__pycache__
                 '''
             }
         }
