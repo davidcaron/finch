@@ -39,15 +39,19 @@ pipeline {
 
         stage('Install') {
             steps {
-                sh 'export PATH="$HOME/miniconda/bin:$PATH"'
-                sh 'make install'
+                sh '''#!/bin/bash -ex
+                  export PATH="$HOME/miniconda/bin:$PATH"
+                  make install
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'export PATH="$HOME/miniconda/bin:$PATH"'
-                sh 'make test'
+                sh '''#!/bin/bash -ex
+                  export PATH="$HOME/miniconda/bin:$PATH"
+                  make test
+                '''
             }
         }
 
