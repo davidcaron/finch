@@ -20,10 +20,9 @@ pipeline {
         stage('[Docker] Test') {
             steps {
                 sh '''
-                docker run -v $(pwd)/tests:/code/tests finch /bin/bash -c " \
+                docker run -v $(pwd)/tests:/code/tests:ro finch /bin/bash -c " \
                 pip install pytest flake8 && \
-                pytest -v -m 'not slow and not online'" && \
-                rm -rf /code/tests/__pycache__
+                pytest -v -m 'not slow and not online'"
                 '''
             }
         }
